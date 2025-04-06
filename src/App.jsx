@@ -8,7 +8,8 @@ function App() {
 
   const getManga = async () => {
     try {
-      const baseUrl = "https://proxy.hoppscotch.io/https://api.mangadex.org";
+      const baseUrl =
+        "https://cors-anywhere-vercel-nu-one.vercel.app/api/proxy?https://api.mangadex.org";
       const resp = await axios.get(`${baseUrl}/manga`, {
         params: { title },
       });
