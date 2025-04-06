@@ -8,7 +8,7 @@ function App() {
 
   const getManga = async () => {
     try {
-      const baseUrl = "https://api.mangadex.org";
+      const baseUrl = "https://proxy.hoppscotch.io/https://api.mangadex.org";
       const resp = await axios.get(`${baseUrl}/manga`, {
         params: { title },
       });
