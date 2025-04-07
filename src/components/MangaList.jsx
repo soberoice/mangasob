@@ -26,7 +26,7 @@ export default function MangaList({ data }) {
     <Center display={"flex"} flexDir={"column"} w={"100%"}>
       {console.log(data)}
       {data?.length ? (
-        <Stack p={4} direction={"row"} justify={"space-between"} w={"100%"}>
+        <Stack p={4} direction={"row"} justify={"space-between"} w={"97%"}>
           <Heading size={"2xl"}>More Popular </Heading>
           <Link>More</Link>
         </Stack>
@@ -68,14 +68,12 @@ export default function MangaList({ data }) {
                     <Card.Body p="4">
                       <Text truncate>{manga?.title}</Text>
                       <Flex justify="space-between" fontWeight="light">
-                        <Flex justify="space-between" fontWeight="light">
-                          <Text fontWeight="lighter" fontSize="xs">
-                            {manga?.attributes?.year}
-                          </Text>
-                          <Text fontWeight="lighter" fontSize="xs">
-                            {manga?.attributes?.status}
-                          </Text>
-                        </Flex>
+                        <Text fontWeight="lighter" fontSize="xs">
+                          {manga?.attributes?.year}
+                        </Text>
+                        <Text fontWeight="lighter" fontSize="xs">
+                          {manga?.attributes?.status}
+                        </Text>
                       </Flex>
                     </Card.Body>
                   </Card.Root>
