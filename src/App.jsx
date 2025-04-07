@@ -7,35 +7,40 @@ function App() {
 
   const getManga = async () => {
     try {
-      const proxy = "https://corsproxy-psi.vercel.app/api/proxy?url=";
-      const baseUrl = `${proxy}https://api.mangadex.org`;
+      const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
+      const targetBase = "https://api.mangadex.org";
 
-      const resp = await axios.get(`${baseUrl}/manga`, {
-        params: {
-          limit: 10,
-          include: ["author", "artist", "cover_art"],
-        },
+      const params = new URLSearchParams({
+        limit: 10,
+        "includes[]": "cover_art",
+        "order[followedCount]": "desc",
       });
 
+      const fullUrl = `${proxyBase}${encodeURIComponent(
+        `${targetBase}/manga?${params}`
+      )}`;
+
+      const resp = await axios.get(`${fullUrl}`);
+
       const mangaData = await Promise.all(
-        resp.data.data.map(async (manga) => {
+        resp.data.data.map((manga) => {
           const coverRel = manga.relationships.find(
             (rel) => rel.type === "cover_art"
           );
 
           if (!coverRel) return null;
 
-          const coverResp = await axios.get(`${baseUrl}/cover/${coverRel.id}`);
-          const fileName = coverResp.data.data.attributes.fileName;
+          const fileName = coverRel.attributes.fileName;
           const isProd = window.location.hostname !== "localhost";
 
           const coverUrl = isProd
-            ? `${proxy}https://uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`
+            ? `${proxyBase}https://uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`
             : `https://uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`;
 
           return {
             id: manga.id,
             title: manga.attributes.title?.en ?? "No English Title",
+            description: manga.attributes.description?.en ?? "No English Title",
             coverUrl: coverUrl,
           };
         })
