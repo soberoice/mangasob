@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useManga } from "./ui/contexts/MangaProvider";
+import { useManga } from "./contexts/MangaProvider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -15,10 +15,15 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { FaBookOpen, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useNavigate } from "react-router";
 
 export default function PopularManga() {
   const { getPopularManga, popularMangaList } = useManga();
 
+  const navigat = useNavigate();
+  const handleclick = (id) => {
+    navigat(`/manga/${id}`);
+  };
   useEffect(() => {
     getPopularManga(0, 5);
   }, []);
@@ -119,7 +124,7 @@ export default function PopularManga() {
                   mt={4}
                   colorScheme="teal"
                   size="lg"
-                  //   onClick={() => handleclick(manga.id)}
+                  onClick={() => handleclick(manga.id)}
                 >
                   <FaBookOpen />
                   Read now
