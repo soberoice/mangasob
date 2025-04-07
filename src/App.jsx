@@ -27,11 +27,16 @@ function App() {
 
           const coverResp = await axios.get(`${baseUrl}/cover/${coverRel.id}`);
           const fileName = coverResp.data.data.attributes.fileName;
+          const isProd = window.location.hostname !== "localhost";
+
+          const coverUrl = isProd
+            ? `https://images.weserv.nl/?url=uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`
+            : `https://uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`;
 
           return {
             id: manga.id,
             title: manga.attributes.title?.en ?? "No English Title",
-            coverUrl: `https://uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`,
+            coverUrl: coverUrl,
           };
         })
       );
