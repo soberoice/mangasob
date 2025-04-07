@@ -3,21 +3,41 @@ import "./App.css";
 import axios from "axios";
 
 function App() {
-  const [data, setData] = useState([]);
-  const title = "Kanojyo to Himitsu to Koimoyou";
+  const [mangaList, setMangaList] = useState([]);
 
   const getManga = async () => {
     try {
-      // Use your self-hosted CORS proxy URL here
-      const baseUrl =
-        "https://corsproxy-psi.vercel.app/api/proxy?url=https://api.mangadex.org";
+      const proxy = "https://corsproxy-psi.vercel.app/api/proxy?url=";
+      const baseUrl = `${proxy}https://api.mangadex.org`;
 
       const resp = await axios.get(`${baseUrl}/manga`, {
-        params: { title },
+        params: {
+          limit: 10,
+          include: ["author", "artist", "cover_art"],
+        },
       });
 
-      setData(resp.data.data);
-      console.log(resp.data.data);
+      const mangaData = await Promise.all(
+        resp.data.data.map(async (manga) => {
+          const coverRel = manga.relationships.find(
+            (rel) => rel.type === "cover_art"
+          );
+
+          if (!coverRel) return null;
+
+          const coverResp = await axios.get(`${baseUrl}/cover/${coverRel.id}`);
+          const fileName = coverResp.data.data.attributes.fileName;
+
+          return {
+            id: manga.id,
+            title: manga.attributes.title?.en ?? "No English Title",
+            coverUrl: `https://uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`,
+          };
+        })
+      );
+
+      // Filter out any null entries
+      setMangaList(mangaData.filter((m) => m !== null));
     } catch (error) {
       console.error("Error fetching manga:", error);
     }
@@ -29,10 +49,17 @@ function App() {
 
   return (
     <>
-      {data.map((item) => (
-        <p className="read-the-docs" key={item.id}>
-          {item?.attributes?.title?.en ?? "No English Title"}
-        </p>
+      <h1>Manga List</h1>
+      {console.log(mangaList)}
+      {mangaList.map((manga) => (
+        <div key={manga.id} style={{ marginBottom: "20px" }}>
+          {manga.coverUrl ? (
+            <img src={manga.coverUrl} alt={manga.title} width="150" />
+          ) : (
+            <p>No cover available</p>
+          )}
+          <p>{manga.title}</p>
+        </div>
       ))}
     </>
   );
