@@ -30,7 +30,7 @@ function App() {
           const isProd = window.location.hostname !== "localhost";
 
           const coverUrl = isProd
-            ? `https://images.weserv.nl/?url=uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`
+            ? `https://images.weserv.nl/?url=https://uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`
             : `https://uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`;
 
           return {
