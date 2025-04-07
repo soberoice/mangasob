@@ -9,7 +9,9 @@ export const MangaProvider = ({ children }) => {
   const [popularMangaList, setPopularMangaList] = useState([]);
   const [mangaInfo, setMangaInfo] = useState();
   const [mangaList, setMangaList] = useState();
+  const [newAdded, setNewAdded] = useState();
 
+  // FUNCTION TO GET POPULAR MANGA
   const getPopularManga = async (page, limit) => {
     try {
       const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
@@ -45,7 +47,10 @@ export const MangaProvider = ({ children }) => {
 
           return {
             id: manga.id,
-            title: manga.attributes.title?.en ?? "No English Title",
+            title:
+              manga.attributes.altTitles?.find((t) => t.en)?.en ||
+              manga.attributes.title?.en ||
+              "No English Title",
             description: manga.attributes.description?.en ?? "No English Title",
             coverUrl: coverUrl,
             attributes: manga.attributes,
@@ -60,6 +65,7 @@ export const MangaProvider = ({ children }) => {
     }
   };
 
+  // FUNCTION TO GET A LIST OF OTHER POPULAR MANGA
   const getMangaList = async () => {
     try {
       const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
@@ -108,6 +114,8 @@ export const MangaProvider = ({ children }) => {
       console.error("Error fetching manga:", error);
     }
   };
+
+  //FUNCTION TO GET A MANGA INFO BY PASSING THE ID
   const getMangaInfo = async (id) => {
     try {
       const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
@@ -146,8 +154,58 @@ export const MangaProvider = ({ children }) => {
         attributes: info.attributes,
       };
 
-      // Filter out any null entries
       setMangaInfo(mangaData);
+    } catch (error) {
+      console.error("Error fetching manga:", error);
+    }
+  };
+
+  //FUNCTION TO GET LATEST MANGA ENTRIES
+  const newAddedManga = async (page, limit) => {
+    try {
+      const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
+      const targetBase = "https://api.mangadex.org";
+
+      const params = new URLSearchParams({
+        offset: page,
+        limit: limit,
+        "includes[]": "cover_art",
+        "order[latestUploadedChapter]": "desc",
+      });
+
+      const fullUrl = `${proxyBase}${encodeURIComponent(
+        `${targetBase}/manga/?${params}`
+      )}`;
+
+      const resp = await axios.get(`${fullUrl}`);
+      console.log(resp);
+
+      const mangaData = await Promise.all(
+        resp.data.data.map((manga) => {
+          const coverRel = manga.relationships.find(
+            (rel) => rel.type === "cover_art"
+          );
+
+          if (!coverRel) return null;
+
+          const fileName = coverRel.attributes.fileName;
+          const isProd = window.location.hostname !== "localhost";
+
+          const coverUrl = isProd
+            ? `${proxyBase}https://uploads.mangadex.org/covers/${manga.id}/${fileName}`
+            : `https://uploads.mangadex.org/covers/${manga.id}/${fileName}`;
+
+          return {
+            id: manga.id,
+            title: manga.attributes.title?.en ?? "No English Title",
+            description: manga.attributes.description?.en ?? "No English Title",
+            coverUrl: coverUrl,
+            attributes: manga.attributes,
+          };
+        })
+      );
+
+      setNewAdded(mangaData);
     } catch (error) {
       console.error("Error fetching manga:", error);
     }
@@ -165,6 +223,8 @@ export const MangaProvider = ({ children }) => {
         mangaInfo,
         getMangaList,
         mangaList,
+        newAddedManga,
+        newAdded,
       }}
     >
       {children}
