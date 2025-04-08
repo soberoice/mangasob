@@ -1,6 +1,6 @@
 import { Link, Stack } from "@chakra-ui/react";
 import React from "react";
-import Search from "./Search";
+import Searchbar from "./Search";
 
 export default function Navbar() {
   return (
@@ -14,7 +14,7 @@ export default function Navbar() {
       zIndex="10"
     >
       <Link href="/">Sober</Link>
-      <Search />
+      <Searchbar />
     </Stack>
   );
 }

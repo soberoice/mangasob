@@ -11,7 +11,7 @@ function App() {
     <Provider>
       <MangaProvider>
         <BrowserRouter>
-          <Navbar />
+          {/* <Navbar /> */}
           <Routes>
             <Route path="/" exact element={<Home />} />
             <Route path="manga/:id" element={<MangaInfo />} />
