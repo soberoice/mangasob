@@ -67,7 +67,7 @@ export default function MangaView() {
             alt={`Page ${index + 1}`}
             maxW={isHorizontal ? "100%" : "800px"}
             objectFit="contain"
-            src={page}
+            src={`https://corsproxy-psi.vercel.app/api/proxy?url=${page}`}
           />
         ))}
       </Stack>
