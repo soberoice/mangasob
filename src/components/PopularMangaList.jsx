@@ -25,7 +25,7 @@ export default function PopularMangaList() {
   return (
     <Stack mt={10} p={4}>
       {console.log(popularMangaList)}
-      {popularMangaList.length ? (
+      {popularMangaList?.length ? (
         <Stack direction={"row"} justify={"space-between"}>
           <Heading size={"2xl"}>Popular manga</Heading>
           <Link>More</Link>
