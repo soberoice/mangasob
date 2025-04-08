@@ -1,6 +1,6 @@
 import { Link, Stack } from "@chakra-ui/react";
 import React from "react";
-import Searchbar from "./Search";
+import Searchbar from "./SearchBar";
 
 export default function Navbar() {
   return (
