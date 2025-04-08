@@ -1,5 +1,5 @@
 import { Box, Center, Heading, Skeleton, Stack } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import MangaList from "../components/MangaList";
 import { useManga } from "../components/contexts/MangaProvider";

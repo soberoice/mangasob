@@ -5,11 +5,12 @@ import { useManga } from "./contexts/MangaProvider";
 
 export default function PaginationList({ totalResults, searchterm }) {
   const [currentPage, setCurrentPage] = useState(1);
+  const [offset, setOffset] = useState();
   const { search } = useManga();
   useEffect(() => {
-    search(currentPage, searchterm);
+    setOffset(20 + (currentPage - 1));
+    search(offset, searchterm);
   }, [currentPage]);
-
   return (
     <Center>
       <Pagination.Root

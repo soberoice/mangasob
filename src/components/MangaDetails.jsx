@@ -75,9 +75,12 @@ export default function MangaDetails({ data }) {
                     </Breadcrumb.List>
                   </Breadcrumb.Root>
                 )}
-                <HStack wrap={"wrap"}>
-                  <Badge>{data?.attributes?.publicationDemographic}</Badge>
-                </HStack>
+                {data?.attributes?.publicationDemographic && (
+                  <HStack wrap={"wrap"}>
+                    <Badge>{data?.attributes?.publicationDemographic}</Badge>
+                    <Badge>{data?.attributes?.type}</Badge>
+                  </HStack>
+                )}
                 <Box h={"200px"} w={"full"} overflow={"scroll"}>
                   <Text>{data?.description}</Text>
                 </Box>
