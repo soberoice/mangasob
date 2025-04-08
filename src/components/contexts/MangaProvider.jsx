@@ -218,8 +218,8 @@ export const MangaProvider = ({ children }) => {
 
   // FUNCTION TO GET SEARCH RESULTS
   const search = async (page, searchTerm) => {
+    setSearchResults();
     try {
-      setSearchResults();
       const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
       const targetBase = "https://api.mangadex.org";
 

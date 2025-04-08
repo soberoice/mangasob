@@ -1,16 +1,20 @@
 import { Box, Center, Heading, Skeleton, Stack } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import MangaList from "../components/MangaList";
 import { useManga } from "../components/contexts/MangaProvider";
 import PaginationList from "../components/Pagination";
 
 export default function SearchFeed() {
+  const [offset, setOffset] = useState(0);
   const { searchterm } = useParams();
   const { searchResults, search, itemNumber } = useManga();
   useEffect(() => {
-    search(0, searchterm);
-  }, [searchterm]);
+    if (searchterm) {
+      search(offset, searchterm);
+    }
+  }, [offset, searchterm]);
+
   return (
     <Stack mt={10} w={"full"} minH={"80vh"} justifyContent={"space-between"}>
       {console.log(searchResults)}
@@ -23,10 +27,14 @@ export default function SearchFeed() {
           <Skeleton p={4} height="10" width="70%" />
         )}
         <Center w={"full"}>
-          <MangaList data={searchResults} />
+          <MangaList data={searchResults || []} />
         </Center>
       </Box>
-      <PaginationList totalResults={itemNumber} searchterm={searchterm} />
+      <PaginationList
+        totalResults={itemNumber}
+        setOffset={setOffset}
+        searchterm={searchterm}
+      />
     </Stack>
   );
 }

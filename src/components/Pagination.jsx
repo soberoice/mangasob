@@ -1,23 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ButtonGroup, IconButton, Pagination, Center } from "@chakra-ui/react";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
-import { useManga } from "./contexts/MangaProvider";
 
-export default function PaginationList({ totalResults, searchterm }) {
+export default function PaginationList({ totalResults, setOffset }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [offset, setOffset] = useState();
-  const { search } = useManga();
-  useEffect(() => {
-    setOffset(20 + (currentPage - 1));
-    search(offset, searchterm);
-  }, [currentPage]);
   return (
     <Center>
       <Pagination.Root
         count={totalResults}
         pageSize={20}
+        defaultPage={1}
         page={currentPage}
-        onPageChange={(e) => setCurrentPage(e.page)}
+        onPageChange={(e) => {
+          setCurrentPage(e.page);
+          setOffset(20 * (e.page - 1));
+        }}
       >
         <ButtonGroup mt={4} variant="ghost" size="sm">
           <Pagination.PrevTrigger asChild>
@@ -31,7 +28,10 @@ export default function PaginationList({ totalResults, searchterm }) {
               <IconButton
                 key={page.value}
                 variant={page.value === currentPage ? "outline" : "ghost"}
-                onClick={() => setCurrentPage(page.value)}
+                onClick={() => {
+                  setCurrentPage(page.value);
+                  setOffset(20 * (page.value - 1));
+                }}
               >
                 {page.value}
               </IconButton>
