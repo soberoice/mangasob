@@ -10,10 +10,13 @@ export const MangaProvider = ({ children }) => {
   const [mangaInfo, setMangaInfo] = useState();
   const [mangaList, setMangaList] = useState();
   const [newAdded, setNewAdded] = useState();
+  const [searchResults, setSearchResults] = useState();
+  const [itemNumber, setItemNumber] = useState();
 
   // FUNCTION TO GET POPULAR MANGA
   const getPopularManga = async (page, limit) => {
     try {
+      setPopularMangaList();
       const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
       const targetBase = "https://api.mangadex.org";
 
@@ -68,6 +71,7 @@ export const MangaProvider = ({ children }) => {
   // FUNCTION TO GET A LIST OF OTHER POPULAR MANGA
   const getMangaList = async () => {
     try {
+      setMangaList();
       const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
       const targetBase = "https://api.mangadex.org";
 
@@ -130,7 +134,7 @@ export const MangaProvider = ({ children }) => {
       )}`;
 
       const resp = await axios.get(`${fullUrl}`);
-      console.log(resp);
+      // console.log(resp);
 
       const info = resp.data.data;
       const coverRel = info.relationships.find(
@@ -163,6 +167,7 @@ export const MangaProvider = ({ children }) => {
   //FUNCTION TO GET LATEST MANGA ENTRIES
   const newAddedManga = async (page, limit) => {
     try {
+      setNewAdded();
       const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
       const targetBase = "https://api.mangadex.org";
 
@@ -178,7 +183,7 @@ export const MangaProvider = ({ children }) => {
       )}`;
 
       const resp = await axios.get(`${fullUrl}`);
-      console.log(resp);
+      // console.log(resp);
 
       const mangaData = await Promise.all(
         resp.data.data.map((manga) => {
@@ -210,6 +215,64 @@ export const MangaProvider = ({ children }) => {
       console.error("Error fetching manga:", error);
     }
   };
+
+  // FUNCTION TO GET SEARCH RESULTS
+  const search = async (page, searchTerm) => {
+    try {
+      setSearchResults();
+      const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
+      const targetBase = "https://api.mangadex.org";
+
+      const params = new URLSearchParams({
+        title: searchTerm,
+        offset: page,
+        limit: 20,
+        "includes[]": "cover_art",
+        "order[followedCount]": "desc",
+      });
+
+      const fullUrl = `${proxyBase}${encodeURIComponent(
+        `${targetBase}/manga?${params}`
+      )}`;
+
+      const resp = await axios.get(`${fullUrl}`);
+      // console.log(resp.data.total);
+      setItemNumber(resp.data.total);
+
+      const mangaData = await Promise.all(
+        resp.data.data.map((manga) => {
+          const coverRel = manga.relationships.find(
+            (rel) => rel.type === "cover_art"
+          );
+
+          if (!coverRel) return null;
+
+          const fileName = coverRel.attributes.fileName;
+          const isProd = window.location.hostname !== "localhost";
+
+          const coverUrl = isProd
+            ? `${proxyBase}https://uploads.mangadex.org/covers/${manga.id}/${fileName}`
+            : `https://uploads.mangadex.org/covers/${manga.id}/${fileName}`;
+
+          return {
+            id: manga.id,
+            title:
+              manga.attributes.altTitles?.find((t) => t.en)?.en ||
+              manga.attributes.title?.en ||
+              "No English Title",
+            description: manga.attributes.description?.en ?? "No English Title",
+            coverUrl: coverUrl,
+            attributes: manga.attributes,
+          };
+        })
+      );
+
+      // Filter out any null entries
+      setSearchResults(mangaData.filter((m) => m !== null));
+    } catch (error) {
+      console.error("Error fetching manga:", error);
+    }
+  };
   //   useEffect(() => {
   //     getMangaDetails("32d76d19-8a05-4db0-9fc2-e0b0648fe9d0");
   //   }, []);
@@ -225,6 +288,9 @@ export const MangaProvider = ({ children }) => {
         mangaList,
         newAddedManga,
         newAdded,
+        search,
+        searchResults,
+        itemNumber,
       }}
     >
       {children}

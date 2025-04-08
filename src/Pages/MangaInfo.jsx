@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import { useManga } from "../components/contexts/MangaProvider";
 import { Image } from "@chakra-ui/react";
+import MangaDetails from "../components/MangaDetails";
 
 export default function MangaInfo() {
   const { id } = useParams();
@@ -12,7 +13,7 @@ export default function MangaInfo() {
   }, [id]);
   return (
     <div>
-      <Image src={mangaInfo?.coverUrl} />
+      <MangaDetails data={mangaInfo} />
     </div>
   );
 }

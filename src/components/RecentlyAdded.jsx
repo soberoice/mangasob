@@ -6,6 +6,7 @@ import {
   Image,
   Skeleton,
   Stack,
+  Text,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router";
@@ -14,14 +15,17 @@ import { useManga } from "./contexts/MangaProvider";
 export default function RecentlyAdded() {
   const { newAdded, newAddedManga } = useManga();
   const numbers = Array.from({ length: 10 }, (_, i) => i + 1);
+  const navigate = useNavigate();
+  const handleClick = (id) => {
+    navigate(`/manga/${id}`);
+  };
 
   useEffect(() => {
     newAddedManga(0, 10);
   }, []);
   return (
-    <Center>
-      <Stack mt={10} p={4}>
-        {/* {console.log(data)} */}
+    <Center W="100%">
+      <Stack mt={10} p={4} W="100%">
         {newAdded?.length ? (
           <Stack direction={"row"} justify={"space-between"}>
             <Heading size={"2xl"}>RecentlyAdded</Heading>
@@ -40,37 +44,45 @@ export default function RecentlyAdded() {
                   maxW="100%"
                   maxH={150}
                   cursore={"pointer"}
-                  //   onClick={() => handleclick(manga?.id)}
+                  onClick={() => handleClick(manga?.id)}
                   key={manga?.id}
                 >
                   {/* {console.log(manga?.coverUrl)} */}
-                  <Box w={"200px"}>
+                  <Box w={"150px"}>
                     <Image
                       objectFit="cover"
                       minW="100px"
+                      minH={"150px"}
                       src={manga?.coverUrl}
                       alt={manga?.title}
                     />
                   </Box>
-                  <Stack direction={"row"} w="full">
-                    <Card.Body>
-                      <Card.Title mb="2" lineClamp={1}>
-                        {manga?.title}
-                      </Card.Title>
-                      {/* <Card.Description lineClamp={1}>
-                        {manga?.altTitles[0]?.ja ||
-                          manga?.altTitles[2]?.ja ||
-                          manga?.altTitles[0]?.ko ||
-                          manga?.altTitles[0]?.zh ||
-                          manga?.altTitles[1]?.ja}
-                      </Card.Description> */}
-                    </Card.Body>
-                    {/* <Card.Footer marginLeft={"auto"}>
-                      <Text fontWeight={"bold"} fontSize={"4xl"}>
-                        {manga.title}
+                  <Card.Body justifyContent={"space-evenly"}>
+                    <Card.Title mb="2" lineClamp={1}>
+                      {manga?.title}
+                    </Card.Title>
+                    <Card.Description
+                      display={"flex"}
+                      flexDir={"column"}
+                      gap={2}
+                    >
+                      <Text width="250px" lineClamp={2}>
+                        {manga?.description}
                       </Text>
-                    </Card.Footer> */}
-                  </Stack>
+                      <Box
+                        display={"flex"}
+                        flexDir={"row"}
+                        justifyContent={"space-between"}
+                      >
+                        <Text fontWeight="lighter" fontSize="xs">
+                          {manga?.attributes?.year}
+                        </Text>
+                        <Text fontWeight="lighter" fontSize="xs">
+                          {manga?.attributes?.status}
+                        </Text>
+                      </Box>
+                    </Card.Description>
+                  </Card.Body>
                 </Card.Root>
               );
             })

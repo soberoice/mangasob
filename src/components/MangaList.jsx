@@ -2,9 +2,7 @@ import {
   Card,
   Center,
   Flex,
-  Heading,
   Image,
-  Stack,
   Text,
   Skeleton,
   GridItem,
@@ -24,15 +22,8 @@ export default function MangaList({ data }) {
 
   return (
     <Center display={"flex"} flexDir={"column"} w={"100%"}>
-      {console.log(data)}
-      {data?.length ? (
-        <Stack p={4} direction={"row"} justify={"space-between"} w={"97%"}>
-          <Heading size={"2xl"}>More Popular </Heading>
-          <Link>More</Link>
-        </Stack>
-      ) : (
-        <Skeleton height="5" width="100%" />
-      )}
+      {/* {console.log(data)} */}
+
       <Box>
         <Grid
           templateColumns={{
