@@ -5,6 +5,7 @@ import MangaInfo from "./Pages/MangaInfo";
 import { MangaProvider } from "./components/contexts/MangaProvider";
 import SearchFeed from "./Pages/SearchFeed";
 import Navbar from "./components/Navbar";
+import MangaView from "./Pages/MangaView";
 
 function App() {
   return (
@@ -16,6 +17,10 @@ function App() {
             <Route path="/" exact element={<Home />} />
             <Route path="manga/:id" element={<MangaInfo />} />
             <Route path="/search/:searchterm" element={<SearchFeed />} />
+            <Route
+              path="/read/:mangaid/:id/:chapter/:title"
+              element={<MangaView />}
+            />
           </Routes>
         </BrowserRouter>
       </MangaProvider>

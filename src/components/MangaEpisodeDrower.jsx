@@ -1,13 +1,8 @@
 import {
-  Box,
   Button,
-  Center,
   CloseButton,
   Drawer,
-  HStack,
-  Image,
   Portal,
-  Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -33,13 +28,7 @@ export default function MangaEpisodeDrower({ mangaid }) {
     <Drawer.Root size={{ base: "xs", lg: "md" }}>
       {console.log(chapters)}
       <Drawer.Trigger asChild>
-        <Button
-          mt={4}
-          colorScheme="teal"
-          size="md"
-          w={10}
-          // onClick={() => handleclick(manga?.id)}
-        >
+        <Button mt={4} colorScheme="teal" size="md" w={10}>
           <FaBookOpen />
         </Button>
       </Drawer.Trigger>

@@ -13,6 +13,7 @@ export const MangaProvider = ({ children }) => {
   const [searchResults, setSearchResults] = useState(); // LIST OF MANGA SEARCH RESULTS
   const [itemNumber, setItemNumber] = useState(); // THE NUMBER OF ITEMS GIVEN IN THE RESULTS
   const [chapters, setChapters] = useState(); //LIST OF CHAPTER INFO
+  const [pages, setPages] = useState();
 
   // FUNCTION TO GET POPULAR MANGA
   const getPopularManga = async (page, limit) => {
@@ -292,6 +293,7 @@ export const MangaProvider = ({ children }) => {
         limit: 100,
         "translatedLanguage[]": "en",
         "order[chapter]": "asc",
+        includeExternalUrl: 0,
       });
 
       const fullUrl = `${proxyBase}${encodeURIComponent(
@@ -299,7 +301,7 @@ export const MangaProvider = ({ children }) => {
       )}`;
 
       const resp = await axios.get(fullUrl);
-      console.log(resp.data);
+      // console.log(resp.data);
 
       setItemNumber(resp.data.total); // total number of chapters
 
@@ -324,6 +326,34 @@ export const MangaProvider = ({ children }) => {
     }
   };
 
+  // FETCH CHAPTER PAGES
+  const getPages = async (id) => {
+    setPages(); // Clear current pages
+
+    try {
+      const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
+      const targetBase = "https://api.mangadex.org";
+      const chapterId = id;
+
+      const fullUrl = `${proxyBase}${encodeURIComponent(
+        `${targetBase}/at-home/server/${chapterId}`
+      )}`;
+
+      const resp = await axios.get(fullUrl);
+      console.log(resp.data);
+
+      const { baseUrl, chapter } = resp.data;
+
+      const imageUrls = chapter.dataSaver.map((fileName) => {
+        return `${baseUrl}/data-saver/${chapter.hash}/${fileName}`;
+      });
+
+      setPages(imageUrls); // 👈 Array of full page image URLs
+    } catch (error) {
+      console.error("Error fetching manga pages:", error);
+    }
+  };
+
   //   useEffect(() => {
   //     getMangaDetails("32d76d19-8a05-4db0-9fc2-e0b0648fe9d0");
   //   }, []);
@@ -344,6 +374,8 @@ export const MangaProvider = ({ children }) => {
         itemNumber,
         getChapters,
         chapters,
+        getPages,
+        pages,
       }}
     >
       {children}
