@@ -62,10 +62,12 @@ export default function MangaDetails({ data }) {
               <Stack w={"full"}>
                 <Heading>{data?.title}</Heading>
                 {data && (
-                  <Breadcrumb.Root size={"sm"}>
+                  <Breadcrumb.Root w={"70%"} size={"sm"}>
                     <Breadcrumb.List>
                       <Breadcrumb.Item>
-                        <Breadcrumb.Link href="/">Home</Breadcrumb.Link>
+                        <Breadcrumb.Link href="/" w={"35px"}>
+                          Home
+                        </Breadcrumb.Link>
                       </Breadcrumb.Item>
                       <Breadcrumb.Separator />
                       <Breadcrumb.Item>

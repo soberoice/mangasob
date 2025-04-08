@@ -55,7 +55,7 @@ export const MangaProvider = ({ children }) => {
             title:
               manga.attributes.altTitles?.find((t) => t.en)?.en ||
               manga.attributes.title?.en ||
-              "No English Title",
+              "No",
             description: manga.attributes.description?.en ?? "No English Title",
             coverUrl: coverUrl,
             attributes: manga.attributes,
@@ -107,7 +107,10 @@ export const MangaProvider = ({ children }) => {
 
           return {
             id: manga.id,
-            title: manga.attributes.title?.en ?? "No English Title",
+            title:
+              manga.attributes.altTitles?.find((t) => t.en)?.en ||
+              manga.attributes.title?.en ||
+              "No",
             description: manga.attributes.description?.en ?? "No English Title",
             coverUrl: coverUrl,
             attributes: manga.attributes,
@@ -156,7 +159,10 @@ export const MangaProvider = ({ children }) => {
 
       const mangaData = {
         id: info.id,
-        title: info.attributes.title?.en ?? "No English Title",
+        title:
+          info.attributes.altTitles?.find((t) => t.en)?.en ||
+          info.attributes.title?.en ||
+          "No",
         description: info.attributes.description?.en ?? "No English Title",
         coverUrl: coverUrl,
         attributes: info.attributes,
@@ -207,7 +213,10 @@ export const MangaProvider = ({ children }) => {
 
           return {
             id: manga.id,
-            title: manga.attributes.title?.en ?? "No English Title",
+            title:
+              manga.attributes.altTitles?.find((t) => t.en)?.en ||
+              manga.attributes.title?.en ||
+              "No",
             description: manga.attributes.description?.en ?? "No English Title",
             coverUrl: coverUrl,
             attributes: manga.attributes,
