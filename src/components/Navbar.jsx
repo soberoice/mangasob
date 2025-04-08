@@ -13,7 +13,7 @@ export default function Navbar() {
       justifyContent="space-between"
       zIndex="10"
     >
-      <Link href="/">Sober</Link>
+      <Link href="/">mangasob</Link>
       <Searchbar />
     </Stack>
   );
