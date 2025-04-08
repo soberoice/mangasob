@@ -24,7 +24,7 @@ export default function RecentlyAdded() {
     newAddedManga(0, 10);
   }, []);
   return (
-    <Center W="100%">
+    <Center W="90%">
       <Stack mt={10} p={4} W="100%">
         {newAdded?.length ? (
           <Stack direction={"row"} justify={"space-between"}>
@@ -66,7 +66,10 @@ export default function RecentlyAdded() {
                       flexDir={"column"}
                       gap={2}
                     >
-                      <Text width="250px" lineClamp={2}>
+                      <Text
+                        width={{ base: "120px", sm: "250px" }}
+                        lineClamp={2}
+                      >
                         {manga?.description}
                       </Text>
                       <Box

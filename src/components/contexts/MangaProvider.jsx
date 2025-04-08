@@ -6,13 +6,13 @@ const MangaContext = createContext();
 export const useManga = () => useContext(MangaContext);
 
 export const MangaProvider = ({ children }) => {
-  const [popularMangaList, setPopularMangaList] = useState([]);
-  const [mangaInfo, setMangaInfo] = useState();
-  const [mangaList, setMangaList] = useState();
-  const [newAdded, setNewAdded] = useState();
-  const [searchResults, setSearchResults] = useState();
-  const [itemNumber, setItemNumber] = useState();
-  const [chapters, setChapters] = useState();
+  const [popularMangaList, setPopularMangaList] = useState([]); // LST OF POPULAR MANGA
+  const [mangaInfo, setMangaInfo] = useState(); // MANGA DETAILS
+  const [mangaList, setMangaList] = useState(); // LIST MANGA
+  const [newAdded, setNewAdded] = useState(); // LIST OF MANGA WITH NEW EPISODES
+  const [searchResults, setSearchResults] = useState(); // LIST OF MANGA SEARCH RESULTS
+  const [itemNumber, setItemNumber] = useState(); // THE NUMBER OF ITEMS GIVEN IN THE RESULTS
+  const [chapters, setChapters] = useState(); //LIST OF CHAPTER INFO
 
   // FUNCTION TO GET POPULAR MANGA
   const getPopularManga = async (page, limit) => {
@@ -71,8 +71,8 @@ export const MangaProvider = ({ children }) => {
 
   // FUNCTION TO GET A LIST OF OTHER POPULAR MANGA
   const getMangaList = async () => {
+    setMangaList();
     try {
-      setMangaList();
       const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
       const targetBase = "https://api.mangadex.org";
 
@@ -80,6 +80,7 @@ export const MangaProvider = ({ children }) => {
         offset: 15,
         limit: 20,
         "includes[]": "cover_art",
+        "order[followedCount]": "desc",
       });
 
       const fullUrl = `${proxyBase}${encodeURIComponent(
@@ -122,6 +123,7 @@ export const MangaProvider = ({ children }) => {
 
   //FUNCTION TO GET A MANGA INFO BY PASSING THE ID
   const getMangaInfo = async (id) => {
+    setMangaInfo();
     try {
       const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
       const targetBase = "https://api.mangadex.org";
@@ -167,6 +169,7 @@ export const MangaProvider = ({ children }) => {
 
   //FUNCTION TO GET LATEST MANGA ENTRIES
   const newAddedManga = async (page, limit) => {
+    setNewAdded();
     try {
       setNewAdded();
       const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";

@@ -69,6 +69,7 @@ export default function MangaEpisodeDrower({ mangaid }) {
                     }
                     w="100%"
                     key={episode?.id}
+                    p={2}
                     justifyContent={"space-between"}
                   >
                     <Text
