@@ -12,6 +12,7 @@ export const MangaProvider = ({ children }) => {
   const [newAdded, setNewAdded] = useState();
   const [searchResults, setSearchResults] = useState();
   const [itemNumber, setItemNumber] = useState();
+  const [chapters, setChapters] = useState();
 
   // FUNCTION TO GET POPULAR MANGA
   const getPopularManga = async (page, limit) => {
@@ -273,6 +274,53 @@ export const MangaProvider = ({ children }) => {
       console.error("Error fetching manga:", error);
     }
   };
+
+  // FUNCTION TO FETCH MANGA CHAPTERS
+  const getChapters = async (offset, id) => {
+    setChapters();
+
+    try {
+      const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
+      const targetBase = "https://api.mangadex.org";
+      const mangaId = id;
+
+      const params = new URLSearchParams({
+        offset: offset,
+        limit: 100,
+        "translatedLanguage[]": "en",
+        "order[chapter]": "asc",
+      });
+
+      const fullUrl = `${proxyBase}${encodeURIComponent(
+        `${targetBase}/manga/${mangaId}/feed?${params}`
+      )}`;
+
+      const resp = await axios.get(fullUrl);
+      console.log(resp.data);
+
+      setItemNumber(resp.data.total); // total number of chapters
+
+      const mangaData = resp.data.data.map((chapter) => {
+        return {
+          attributes: chapter.attributes,
+          id: chapter.id,
+          title:
+            chapter.attributes.title || `Chapter ${chapter.attributes.chapter}`,
+          chapterNumber: chapter.attributes.chapter,
+          language: chapter.attributes.translatedLanguage,
+          createdAt: chapter.attributes.publishAt,
+          scanGroup:
+            chapter.relationships.find((rel) => rel.type === "scanlation_group")
+              ?.attributes?.name ?? "Unknown",
+        };
+      });
+
+      setChapters(mangaData); // 👈 set cleaned-up chapters
+    } catch (error) {
+      console.error("Error fetching manga chapters:", error);
+    }
+  };
+
   //   useEffect(() => {
   //     getMangaDetails("32d76d19-8a05-4db0-9fc2-e0b0648fe9d0");
   //   }, []);
@@ -291,6 +339,8 @@ export const MangaProvider = ({ children }) => {
         search,
         searchResults,
         itemNumber,
+        getChapters,
+        chapters,
       }}
     >
       {children}

@@ -14,6 +14,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import MangaExtraDetails from "./MangaExtraDetails";
+import MangaEpisodeDrower from "./MangaEpisodeDrower";
 
 export default function MangaDetails({ data }) {
   return (
@@ -78,15 +79,12 @@ export default function MangaDetails({ data }) {
                 {data?.attributes?.publicationDemographic && (
                   <HStack wrap={"wrap"}>
                     <Badge>{data?.attributes?.publicationDemographic}</Badge>
-                    <Badge>{data?.attributes?.type}</Badge>
                   </HStack>
                 )}
                 <Box h={"200px"} w={"full"} overflow={"scroll"}>
                   <Text>{data?.description}</Text>
                 </Box>
-                {/* {data && (
-                  <MangaEpisodeDrower mangaid={id} episodes={data?.chapters} />
-                )} */}
+                {data && <MangaEpisodeDrower mangaid={data?.id} />}
               </Stack>
             </Center>
           </Stack>

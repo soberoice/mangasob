@@ -33,7 +33,7 @@ export default function SearchFeed() {
       <PaginationList
         totalResults={itemNumber}
         setOffset={setOffset}
-        searchterm={searchterm}
+        pageSize={20}
       />
     </Stack>
   );
