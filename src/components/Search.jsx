@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { LuSearch } from "react-icons/lu";
 
-export default function Searchbar() {
+export default function Search() {
   const [searchTerm, setSearchTerm] = useState(""); // Corrected destructuring
   const navigate = useNavigate();
 
