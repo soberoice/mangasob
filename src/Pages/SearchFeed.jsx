@@ -17,7 +17,7 @@ export default function SearchFeed() {
       <Box>
         {searchResults?.length ? (
           <Stack p={4} direction={"row"} justify={"space-between"}>
-            <Heading size={"2xl"}>Search Results For {searchterm} </Heading>
+            <Heading size={"2xl"}>Search Results For: {searchterm} </Heading>
           </Stack>
         ) : (
           <Skeleton p={4} height="10" width="70%" />
