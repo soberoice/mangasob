@@ -56,7 +56,7 @@ export default function RecentlyAdded() {
                     src={manga?.coverUrl}
                     alt={manga?.title}
                   />
-                  <Box pb={"4"} w={"100%"}>
+                  <Box pb={"4"}>
                     <Card.Body>
                       <Card.Title mb="2" lineClamp={1}>
                         {manga?.title}
@@ -65,11 +65,7 @@ export default function RecentlyAdded() {
                         {manga?.description}
                       </Card.Description>
                     </Card.Body>
-                    <Card.Footer
-                      w={"100%"}
-                      display={"flex"}
-                      justifyContent={"space-between"}
-                    >
+                    <Card.Footer>
                       <Text fontWeight="lighter" fontSize="xs">
                         {manga?.attributes?.year}
                       </Text>
