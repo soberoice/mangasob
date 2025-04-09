@@ -103,8 +103,8 @@ export const MangaProvider = ({ children }) => {
           const isProd = window.location.hostname !== "localhost";
 
           const coverUrl = isProd
-            ? `${proxyBase}https://uploads.mangadex.org/covers/${manga.id}/${fileName}`
-            : `https://uploads.mangadex.org/covers/${manga.id}/${fileName}`;
+            ? `${proxyBase}https://uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`
+            : `https://uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`;
 
           return {
             id: manga.id,
@@ -155,8 +155,8 @@ export const MangaProvider = ({ children }) => {
       const isProd = window.location.hostname !== "localhost";
 
       const coverUrl = isProd
-        ? `${proxyBase}https://uploads.mangadex.org/covers/${info.id}/${fileName}.512.jpg`
-        : `https://uploads.mangadex.org/covers/${info.id}/${fileName}.512.jpg`;
+        ? `${proxyBase}https://uploads.mangadex.org/covers/${info.id}/${fileName}.256.jpg`
+        : `https://uploads.mangadex.org/covers/${info.id}/${fileName}.256.jpg`;
 
       const mangaData = {
         id: info.id,
@@ -209,8 +209,8 @@ export const MangaProvider = ({ children }) => {
           const isProd = window.location.hostname !== "localhost";
 
           const coverUrl = isProd
-            ? `${proxyBase}https://uploads.mangadex.org/covers/${manga.id}/${fileName}`
-            : `https://uploads.mangadex.org/covers/${manga.id}/${fileName}`;
+            ? `${proxyBase}https://uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`
+            : `https://uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`;
 
           return {
             id: manga.id,
@@ -266,8 +266,8 @@ export const MangaProvider = ({ children }) => {
           const isProd = window.location.hostname !== "localhost";
 
           const coverUrl = isProd
-            ? `${proxyBase}https://uploads.mangadex.org/covers/${manga.id}/${fileName}`
-            : `https://uploads.mangadex.org/covers/${manga.id}/${fileName}`;
+            ? `${proxyBase}https://uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`
+            : `https://uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`;
 
           return {
             id: manga.id,
