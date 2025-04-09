@@ -56,8 +56,8 @@ export default function RecentlyAdded() {
                     src={manga?.coverUrl}
                     alt={manga?.title}
                   />
-                  <Box pb={"4"} w={"100%"}>
-                    <Card.Body h={"90%"}>
+                  <Box pb={"4"} w={"70%"}>
+                    <Card.Body>
                       <Card.Title mb="2" lineClamp={1}>
                         {manga?.title}
                       </Card.Title>
