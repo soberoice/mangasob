@@ -2,7 +2,6 @@ import {
   Box,
   Card,
   Center,
-  Container,
   Heading,
   Image,
   Skeleton,
@@ -25,8 +24,8 @@ export default function RecentlyAdded() {
     newAddedManga(0, 10);
   }, []);
   return (
-    <Center>
-      <Stack mt={10} p={4}>
+    <Center w={"100%"}>
+      <Stack w={"100%"} mt={10} p={4}>
         {newAdded?.length ? (
           <Stack direction={"row"} justify={"space-between"}>
             <Heading size={"2xl"}>RecentlyAdded</Heading>
@@ -61,7 +60,7 @@ export default function RecentlyAdded() {
                       <Card.Title mb="2" lineClamp={1}>
                         {manga?.title}
                       </Card.Title>
-                      <Card.Description gap={2} lineClamp={2}>
+                      <Card.Description w={"70%"} lineClamp={2}>
                         {manga?.description}
                       </Card.Description>
                     </Card.Body>
