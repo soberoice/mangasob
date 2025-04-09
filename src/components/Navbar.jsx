@@ -1,6 +1,7 @@
 import { Link, Stack } from "@chakra-ui/react";
 import React from "react";
 import NavSearch from "./NavSearch";
+import TagsContainer from "./tagsContainer";
 
 export default function Navbar() {
   return (
@@ -13,7 +14,7 @@ export default function Navbar() {
       justifyContent="space-between"
       zIndex="10"
     >
-      <Link href="/">mangasob</Link>
+      <Link href="/">MS</Link>
       <NavSearch />
     </Stack>
   );

@@ -2,6 +2,7 @@ import { Box, Stack, Tag, Text } from "@chakra-ui/react";
 import React from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useNavigate } from "react-router";
 
 export default function MangaExtraDetails({ data }) {
   dayjs.extend(relativeTime);
@@ -10,6 +11,10 @@ export default function MangaExtraDetails({ data }) {
   const formatted = date.toLocaleDateString();
   const isoString = data?.attributes?.updatedAt;
   const formattedDate = dayjs(isoString).fromNow();
+  const navigat = useNavigate();
+  const handleClick = (name, id) => {
+    navigat(`/tag/${name}/${id}`);
+  };
   return (
     <Box
       px="4"
@@ -33,7 +38,12 @@ export default function MangaExtraDetails({ data }) {
           <Text fontWeight={"bold"}>Genre:</Text>
           <Stack direction="row" gap="1" px="4" wrap={"wrap"}>
             {data?.attributes?.tags?.map((tag) => (
-              <Tag.Root colorPalette={"white"} key={tag?.id} cursor={"pointer"}>
+              <Tag.Root
+                onClick={() => handleClick(tag?.attributes?.name?.en, tag.id)}
+                colorPalette={"white"}
+                key={tag?.id}
+                cursor={"pointer"}
+              >
                 <Tag.Label>{tag?.attributes?.name?.en}</Tag.Label>
               </Tag.Root>
             ))}

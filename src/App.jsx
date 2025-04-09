@@ -23,7 +23,7 @@ function App() {
               path="/read/:mangaid/:id/:chapter/:title"
               element={<MangaView />}
             />
-            <Route path="/tags/:id" element={<TagFeed />} />
+            <Route path="/tag/:name/:id" element={<TagFeed />} />
             <Route path="/popular" element={<PopularMangaFeed />} />
           </Routes>
         </BrowserRouter>

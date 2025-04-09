@@ -6,6 +6,7 @@ import { useManga } from "../components/contexts/MangaProvider";
 import { Box, Heading, Skeleton, Stack } from "@chakra-ui/react";
 import RecentlyAdded from "../components/RecentlyAdded";
 import { Link } from "react-router";
+import TagsContainer from "../components/tagsContainer";
 
 export default function Home() {
   const { mangaList, getMangaList } = useManga();

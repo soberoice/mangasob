@@ -2,6 +2,7 @@ import { IconButton, Input } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { LuSearch } from "react-icons/lu";
+import TagsContainer from "./tagsContainer";
 
 export default function NavSearch() {
   const [searchTerm, setSearchTerm] = useState(""); // Corrected destructuring
@@ -19,6 +20,7 @@ export default function NavSearch() {
 
   return (
     <form className="gap-2" onSubmit={handleSubmit}>
+      <TagsContainer />
       <Input
         placeholder="Search Something "
         bg="white"

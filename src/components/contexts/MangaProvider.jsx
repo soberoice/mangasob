@@ -14,6 +14,7 @@ export const MangaProvider = ({ children }) => {
   const [itemNumber, setItemNumber] = useState(); // THE NUMBER OF ITEMS GIVEN IN THE RESULTS
   const [chapters, setChapters] = useState(); //LIST OF CHAPTER INFO
   const [pages, setPages] = useState();
+  const [tagsList, setTagsList] = useState();
 
   // FUNCTION TO GET POPULAR MANGA
   const getPopularManga = async (page, limit) => {
@@ -364,6 +365,91 @@ export const MangaProvider = ({ children }) => {
     }
   };
 
+  // FETCH MANGA UNDER A CERTAIN TAG
+  const getMangaTagList = async (page, id) => {
+    setMangaList();
+    try {
+      const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
+      const targetBase = "https://api.mangadex.org";
+
+      const params = new URLSearchParams({
+        offset: page,
+        limit: 20,
+        "includes[]": "cover_art",
+        "includedTags[]": id,
+      });
+
+      const fullUrl = `${proxyBase}${encodeURIComponent(
+        `${targetBase}/manga?${params}`
+      )}`;
+
+      const resp = await axios.get(`${fullUrl}`);
+      setItemNumber(resp.data.total);
+
+      const mangaData = await Promise.all(
+        resp.data.data.map((manga) => {
+          const coverRel = manga.relationships.find(
+            (rel) => rel.type === "cover_art"
+          );
+
+          if (!coverRel) return null;
+
+          const fileName = coverRel.attributes.fileName;
+          const isProd = window.location.hostname !== "localhost";
+
+          const coverUrl = isProd
+            ? `${proxyBase}https://uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`
+            : `https://uploads.mangadex.org/covers/${manga.id}/${fileName}.256.jpg`;
+
+          return {
+            id: manga.id,
+            title:
+              manga.attributes.altTitles?.find((t) => t.en)?.en ||
+              manga.attributes.title?.en ||
+              "No",
+            description: manga.attributes.description?.en ?? "No English Title",
+            coverUrl: coverUrl,
+            attributes: manga.attributes,
+          };
+        })
+      );
+
+      // Filter out any null entries
+      setMangaList(mangaData.filter((m) => m !== null));
+    } catch (error) {
+      console.error("Error fetching manga:", error);
+    }
+  };
+
+  const getTagsList = async () => {
+    setTagsList();
+    try {
+      const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
+      const targetBase = "https://api.mangadex.org";
+
+      const fullUrl = `${proxyBase}${encodeURIComponent(
+        `${targetBase}/manga/tag`
+      )}`;
+
+      const resp = await axios.get(`${fullUrl}`);
+      console.log(resp);
+      setItemNumber(resp.data.total);
+
+      const mangaData = await Promise.all(
+        resp.data.data.map((tag) => {
+          return {
+            id: tag.id,
+            name: tag.attributes.name.en,
+          };
+        })
+      );
+
+      // Filter out any null entries
+      setTagsList(mangaData.filter((m) => m !== null));
+    } catch (error) {
+      console.error("Error fetching manga:", error);
+    }
+  };
   //   useEffect(() => {
   //     getMangaDetails("32d76d19-8a05-4db0-9fc2-e0b0648fe9d0");
   //   }, []);
@@ -386,6 +472,9 @@ export const MangaProvider = ({ children }) => {
         chapters,
         getPages,
         pages,
+        getMangaTagList,
+        getTagsList,
+        tagsList,
       }}
     >
       {children}
