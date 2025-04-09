@@ -1,0 +1,41 @@
+.carousel-wrapper {
+  position: relative;
+}
+
+/* Make the slick dots vertical and move to right */
+.slick-dots {
+  position: absolute !important;
+  top: 50% !important;
+  right: 10px !important;
+  left: auto !important; /* ← this blocks left align */
+  bottom: auto !important;
+  transform: translateY(-50%) !important;
+  width: auto !important; /* important: removes 100% width default */
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  z-index: 10;
+  background: transparent;
+  text-align: left !important;
+}
+
+.slick-dots li button:before {
+  font-size: 15px !important;
+  color: rgb(0, 0, 0) !important;
+  opacity: 0.75 !important;
+  border: 2px solid white !important;
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+.slick-dots li.slick-active button:before {
+  color: rgba(255, 255, 255, 0) !important;
+  border: 2px solid black !important;
+  transform: scale(1.2) !important;
+  opacity: 1;
+}
