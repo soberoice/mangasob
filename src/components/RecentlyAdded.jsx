@@ -25,8 +25,8 @@ export default function RecentlyAdded() {
     newAddedManga(0, 10);
   }, []);
   return (
-    <Center W="100%">
-      <Stack mt={10} p={4} W="100%">
+    <Center>
+      <Stack mt={10} p={4}>
         {newAdded?.length ? (
           <Stack direction={"row"} justify={"space-between"}>
             <Heading size={"2xl"}>RecentlyAdded</Heading>
@@ -56,7 +56,7 @@ export default function RecentlyAdded() {
                     src={manga?.coverUrl}
                     alt={manga?.title}
                   />
-                  <Box pb={"4"} w={"70%"}>
+                  <Box pb={"4"} w={"100%"}>
                     <Card.Body>
                       <Card.Title mb="2" lineClamp={1}>
                         {manga?.title}
