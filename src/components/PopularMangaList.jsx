@@ -28,7 +28,7 @@ export default function PopularMangaList() {
       {popularMangaList?.length ? (
         <Stack direction={"row"} justify={"space-between"}>
           <Heading size={"2xl"}>Popular manga</Heading>
-          <Link>More</Link>
+          <Link to={"/popular"}>More</Link>
         </Stack>
       ) : (
         <Skeleton height="5" width="100%" />

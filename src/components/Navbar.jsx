@@ -1,13 +1,8 @@
 import { Link, Stack } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React from "react";
 import NavSearch from "./NavSearch";
-import { useManga } from "./contexts/MangaProvider";
 
 export default function Navbar() {
-  const { getPages, pages } = useManga();
-  useEffect(() => {
-    getPages();
-  }, []);
   return (
     <Stack
       direction="row"
@@ -18,7 +13,6 @@ export default function Navbar() {
       justifyContent="space-between"
       zIndex="10"
     >
-      {console.log(pages)}
       <Link href="/">mangasob</Link>
       <NavSearch />
     </Stack>

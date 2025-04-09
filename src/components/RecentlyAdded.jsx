@@ -2,6 +2,7 @@ import {
   Box,
   Card,
   Center,
+  Container,
   Heading,
   Image,
   Skeleton,
@@ -24,7 +25,7 @@ export default function RecentlyAdded() {
     newAddedManga(0, 10);
   }, []);
   return (
-    <Center W="90%">
+    <Center W="100%">
       <Stack mt={10} p={4} W="100%">
         {newAdded?.length ? (
           <Stack direction={"row"} justify={"space-between"}>
@@ -43,63 +44,52 @@ export default function RecentlyAdded() {
                   overflow="hidden"
                   maxW="100%"
                   maxH={150}
-                  cursore={"pointer"}
                   onClick={() => handleClick(manga?.id)}
                   key={manga?.id}
                 >
                   {/* {console.log(manga?.coverUrl)} */}
-                  <Box w={"150px"}>
-                    <Image
-                      objectFit="cover"
-                      minW="100px"
-                      minH={"150px"}
-                      src={manga?.coverUrl}
-                      alt={manga?.title}
-                    />
-                  </Box>
-                  <Card.Body justifyContent={"space-evenly"}>
-                    <Card.Title mb="2" lineClamp={1}>
-                      {manga?.title}
-                    </Card.Title>
-                    <Card.Description
-                      display={"flex"}
-                      flexDir={"column"}
-                      gap={2}
-                    >
-                      <Text
-                        width={{ base: "120px", sm: "250px" }}
-                        lineClamp={2}
-                      >
+                  <Image
+                    objectFit="cover"
+                    maxW="100px"
+                    minW="100px"
+                    minH={"150px"}
+                    src={manga?.coverUrl}
+                    alt={manga?.title}
+                  />
+                  <Box pb={"4"} w={"100%"}>
+                    <Card.Body h={"90%"}>
+                      <Card.Title mb="2" lineClamp={1}>
+                        {manga?.title}
+                      </Card.Title>
+                      <Card.Description gap={2} lineClamp={2}>
                         {manga?.description}
+                      </Card.Description>
+                    </Card.Body>
+                    <Card.Footer
+                      w={"100%"}
+                      display={"flex"}
+                      justifyContent={"space-between"}
+                    >
+                      <Text fontWeight="lighter" fontSize="xs">
+                        {manga?.attributes?.year}
                       </Text>
-                      <Box
-                        display={"flex"}
-                        flexDir={"row"}
-                        justifyContent={"space-between"}
-                      >
-                        <Text fontWeight="lighter" fontSize="xs">
-                          {manga?.attributes?.year}
-                        </Text>
-                        <Text fontWeight="lighter" fontSize="xs">
-                          {manga?.attributes?.status}
-                        </Text>
-                      </Box>
-                    </Card.Description>
-                  </Card.Body>
+                      <Text fontWeight="lighter" fontSize="xs">
+                        {manga?.attributes?.status}
+                      </Text>
+                    </Card.Footer>
+                  </Box>
                 </Card.Root>
               );
             })
           : numbers.map((num) => (
               <Card.Root
-                flexDirection="row"
                 cursor="pointer"
                 overflow="hidden"
-                size={"sm"}
-                w="full"
+                minW="52vh"
                 h={150}
                 key={num}
               >
-                <Skeleton aspectRatio={4 / 1.4} Height="100%" W="100%" />
+                <Skeleton Height="100%" minW="100%" />
               </Card.Root>
             ))}
       </Stack>

@@ -34,6 +34,7 @@ export const MangaProvider = ({ children }) => {
       )}`;
 
       const resp = await axios.get(`${fullUrl}`);
+      setItemNumber(resp.data.total);
 
       const mangaData = await Promise.all(
         resp.data.data.map((manga) => {

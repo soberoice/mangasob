@@ -6,6 +6,8 @@ import { MangaProvider } from "./components/contexts/MangaProvider";
 import SearchFeed from "./Pages/SearchFeed";
 import Navbar from "./components/Navbar";
 import MangaView from "./Pages/MangaView";
+import TagFeed from "./Pages/TagFeed";
+import PopularMangaFeed from "./Pages/PopularMangaFeed";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
               path="/read/:mangaid/:id/:chapter/:title"
               element={<MangaView />}
             />
+            <Route path="/tags/:id" element={<TagFeed />} />
+            <Route path="/popular" element={<PopularMangaFeed />} />
           </Routes>
         </BrowserRouter>
       </MangaProvider>

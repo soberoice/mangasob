@@ -21,7 +21,7 @@ export default function Home() {
           {mangaList?.length ? (
             <Stack p={4} direction={"row"} justify={"space-between"} w={"97%"}>
               <Heading size={"2xl"}>More Popular </Heading>
-              <Link>More</Link>
+              <Link to={"/popular"}>More</Link>
             </Stack>
           ) : (
             <Skeleton height="5" width="100%" />
