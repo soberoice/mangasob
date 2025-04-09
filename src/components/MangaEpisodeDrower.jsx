@@ -26,7 +26,6 @@ export default function MangaEpisodeDrower({ mangaid }) {
 
   return (
     <Drawer.Root size={{ base: "xs", lg: "md" }}>
-      {console.log(chapters)}
       <Drawer.Trigger asChild>
         <Button mt={4} colorScheme="teal" size="md" w={10}>
           <FaBookOpen />

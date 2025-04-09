@@ -11,7 +11,7 @@ export default function TagFeed() {
   const { getMangaTagList, mangaList, itemNumber } = useManga();
   useEffect(() => {
     getMangaTagList(offset, id);
-  }, []);
+  }, [offset, id]);
   return (
     <Stack mt={10} w={"full"} minH={"80vh"} justifyContent={"space-between"}>
       <Box>

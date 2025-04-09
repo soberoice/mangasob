@@ -39,8 +39,6 @@ export default function MangaDetails({ data }) {
             gap={10}
             direction={{ base: "column", md: "row" }}
           >
-            {console.log(data)}
-
             <Center w={{ base: "100%", lg: "25%" }}>
               {data && (
                 <Box

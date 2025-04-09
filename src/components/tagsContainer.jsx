@@ -31,14 +31,14 @@ export default function TagsContainer() {
             </Dialog.CloseTrigger>
             <Dialog.Body display={"flex"} flexWrap={"wrap"} gap={2}>
               {tagsList?.map((tag) => (
-                <Badge
+                <Dialog.Trigger
+                  key={tag.id}
                   onClick={() => handleClick(tag.name, tag.id)}
-                  cursor={"pointer"}
-                  size={"lg"}
-                  variant={"solid"}
                 >
-                  {tag.name}
-                </Badge>
+                  <Badge cursor={"pointer"} size={"lg"} variant={"solid"}>
+                    {tag.name}
+                  </Badge>
+                </Dialog.Trigger>
               ))}
             </Dialog.Body>
           </Dialog.Content>

@@ -24,7 +24,6 @@ export default function PopularMangaList() {
   }, []);
   return (
     <Stack mt={10} p={4}>
-      {console.log(popularMangaList)}
       {popularMangaList?.length ? (
         <Stack direction={"row"} justify={"space-between"}>
           <Heading size={"2xl"}>Popular manga</Heading>
@@ -34,7 +33,6 @@ export default function PopularMangaList() {
         <Skeleton height="5" width="100%" />
       )}
       <Stack direction={"row"} overflow={"scroll"}>
-        {/* {console.log(data)} */}
         {popularMangaList?.length
           ? popularMangaList?.map((manga) => (
               <Card.Root

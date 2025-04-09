@@ -351,7 +351,6 @@ export const MangaProvider = ({ children }) => {
       )}`;
 
       const resp = await axios.get(fullUrl);
-      console.log(resp.data);
 
       const { baseUrl, chapter } = resp.data;
 
@@ -423,16 +422,18 @@ export const MangaProvider = ({ children }) => {
 
   const getTagsList = async () => {
     setTagsList();
+
     try {
       const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
       const targetBase = "https://api.mangadex.org";
-
+      const params = new URLSearchParams({
+        "order[followedCount]": "desc",
+      });
       const fullUrl = `${proxyBase}${encodeURIComponent(
-        `${targetBase}/manga/tag`
+        `${targetBase}/manga/tag?${params}`
       )}`;
 
       const resp = await axios.get(`${fullUrl}`);
-      console.log(resp);
       setItemNumber(resp.data.total);
 
       const mangaData = await Promise.all(
