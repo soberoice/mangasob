@@ -35,7 +35,7 @@ export default function TagsContainer() {
           <Popover.Content>
             <Popover.Arrow />
             <Popover.Body
-              minH={"325px"}
+              minH={"225px"}
               display={"flex"}
               flexDir={"column"}
               gap={2}
@@ -43,7 +43,7 @@ export default function TagsContainer() {
               <Popover.Title fontWeight={"bold"} fontSize={"xl"}>
                 Tags
               </Popover.Title>
-              <Box maxH={"200px"} overflow={"scroll"}>
+              <Box maxH={"150px"} overflow={"scroll"}>
                 {tagsList?.map((tag) => (
                   <Popover.Trigger
                     key={tag?.id}
