@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ButtonGroup, IconButton, Pagination, Center } from "@chakra-ui/react";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
 export default function PaginationList({ totalResults, setOffset, pageSize }) {
   const [currentPage, setCurrentPage] = useState(1);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
   return (
     <Center>
       <Pagination.Root
