@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router";
 import { Provider } from "./components/ui/provider";
 import Home from "./Pages/Home";
 import MangaInfo from "./Pages/MangaInfo";
@@ -8,13 +8,21 @@ import Navbar from "./components/Navbar";
 import MangaView from "./Pages/MangaView";
 import TagFeed from "./Pages/TagFeed";
 import PopularMangaFeed from "./Pages/PopularMangaFeed";
+import { useEffect } from "react";
 
+const ScroleToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+};
 function App() {
   return (
     <Provider>
       <MangaProvider>
         <BrowserRouter>
           <Navbar />
+          <ScroleToTop />
           <Routes>
             <Route path="/" exact element={<Home />} />
             <Route path="manga/:id" element={<MangaInfo />} />

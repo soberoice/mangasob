@@ -35,7 +35,7 @@ export default function PopularManga() {
         onClick={onClick}
         position="absolute"
         right="10px"
-        top="90%"
+        top="95%"
         transform="translateY(-50%)"
         zIndex="2"
         colorScheme="teal"
@@ -53,7 +53,7 @@ export default function PopularManga() {
         onClick={onClick}
         position="absolute"
         right="70px"
-        top="90%"
+        top="95%"
         transform="translateY(-50%)"
         zIndex="2"
         colorScheme="teal"

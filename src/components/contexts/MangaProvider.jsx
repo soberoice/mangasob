@@ -15,6 +15,7 @@ export const MangaProvider = ({ children }) => {
   const [chapters, setChapters] = useState(); //LIST OF CHAPTER INFO
   const [pages, setPages] = useState();
   const [tagsList, setTagsList] = useState();
+  const [stats, setStats] = useState();
 
   // FUNCTION TO GET POPULAR MANGA
   const getPopularManga = async (page, limit) => {
@@ -451,6 +452,28 @@ export const MangaProvider = ({ children }) => {
       console.error("Error fetching manga:", error);
     }
   };
+  const getMangaStats = async (id) => {
+    if (!id) {
+      return;
+    }
+    setStats();
+
+    try {
+      const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
+      const targetBase = "https://api.mangadex.org";
+      const fullUrl = `${proxyBase}${encodeURIComponent(
+        `${targetBase}/statistics/manga/${id}`
+      )}`;
+
+      const resp = await axios.get(`${fullUrl}`);
+      const mangaData = resp.data.statistics[id];
+
+      // Filter out any null entries
+      setStats(mangaData);
+    } catch (error) {
+      console.error("Error fetching manga:", error);
+    }
+  };
   //   useEffect(() => {
   //     getMangaDetails("32d76d19-8a05-4db0-9fc2-e0b0648fe9d0");
   //   }, []);
@@ -476,6 +499,8 @@ export const MangaProvider = ({ children }) => {
         getMangaTagList,
         getTagsList,
         tagsList,
+        getMangaStats,
+        stats,
       }}
     >
       {children}

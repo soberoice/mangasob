@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Badge,
   Box,
   Breadcrumb,
-  Button,
   Center,
   Heading,
   HStack,
@@ -15,8 +14,18 @@ import {
 } from "@chakra-ui/react";
 import MangaExtraDetails from "./MangaExtraDetails";
 import MangaEpisodeDrower from "./MangaEpisodeDrower";
+import { useManga } from "./contexts/MangaProvider";
+import { FaRegStar } from "react-icons/fa";
+import { MdBookmarkAdded } from "react-icons/md";
+import MangaList from "./MangaList";
 
 export default function MangaDetails({ data }) {
+  const { getMangaList, getMangaStats, stats, mangaList } = useManga();
+  useEffect(() => {
+    getMangaStats(data?.id);
+    getMangaList();
+  }, [data?.id]);
+
   return (
     <div>
       <Box w={"100%"}>
@@ -84,6 +93,14 @@ export default function MangaDetails({ data }) {
                 <Box h={"200px"} w={"full"} overflow={"scroll"}>
                   <Text>{data?.description}</Text>
                 </Box>
+                <HStack>
+                  <Badge size={"lg"} display={"flex"}>
+                    <MdBookmarkAdded /> {stats?.follows}
+                  </Badge>
+                  <Badge size={"lg"} display={"flex"}>
+                    <FaRegStar /> {stats?.rating.average.toFixed(1)}
+                  </Badge>
+                </HStack>
                 {data && <MangaEpisodeDrower mangaid={data?.id} />}
               </Stack>
             </Center>
@@ -94,17 +111,17 @@ export default function MangaDetails({ data }) {
             <MangaExtraDetails data={data} />
           </Center>
         </Stack>
-        {/* <Stack py={10} px={{ base: 5, lg: 10 }} w={"100%"} bgColor={"black"}> */}
-        {/* {more?.results?.length ? (
+        <Stack py={10} px={{ base: 5, lg: 10 }} w={"100%"} bgColor={"black"}>
+          {mangaList?.length ? (
             <Stack p={4} direction={"row"} justify={"space-between"}>
               <Heading size={"2xl"}>Read More </Heading>
             </Stack>
           ) : (
             <Skeleton p={4} height="15" width="20%" />
-          )} */}
+          )}
 
-        {/* <MangaList data={more} /> */}
-        {/* </Stack> */}
+          <MangaList data={mangaList} />
+        </Stack>
       </Box>
     </div>
   );
