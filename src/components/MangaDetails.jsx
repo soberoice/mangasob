@@ -90,9 +90,11 @@ export default function MangaDetails({ data }) {
                     <Badge>{data?.attributes?.publicationDemographic}</Badge>
                   </HStack>
                 )}
-                <Box h={"200px"} w={"full"} overflow={"scroll"}>
-                  <Text>{data?.description}</Text>
-                </Box>
+                {data?.description && (
+                  <Box h={"200px"} w={"full"} overflow={"scroll"}>
+                    <Text>{data?.description}</Text>
+                  </Box>
+                )}
                 <HStack>
                   <Badge size={"lg"} display={"flex"}>
                     <MdBookmarkAdded /> {stats?.follows}

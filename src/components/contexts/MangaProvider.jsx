@@ -36,6 +36,7 @@ export const MangaProvider = ({ children }) => {
       )}`;
 
       const resp = await axios.get(`${fullUrl}`);
+      console.log(resp);
       setItemNumber(resp.data.total);
 
       const mangaData = await Promise.all(
@@ -59,7 +60,7 @@ export const MangaProvider = ({ children }) => {
               manga.attributes.altTitles?.find((t) => t.en)?.en ||
               manga.attributes.title?.en ||
               "No",
-            description: manga.attributes.description?.en ?? "No English Title",
+            description: manga.attributes.description?.en ?? null,
             coverUrl: coverUrl,
             attributes: manga.attributes,
           };
