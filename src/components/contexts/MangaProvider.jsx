@@ -421,7 +421,7 @@ export const MangaProvider = ({ children }) => {
     }
   };
 
-  const getTagsList = async () => {
+  const getTagsList = async (searchTerm) => {
     setTagsList();
 
     try {
@@ -437,17 +437,28 @@ export const MangaProvider = ({ children }) => {
       const resp = await axios.get(`${fullUrl}`);
       setItemNumber(resp.data.total);
 
-      const mangaData = await Promise.all(
+      const tagsData = await Promise.all(
         resp.data.data.map((tag) => {
-          return {
-            id: tag.id,
-            name: tag.attributes.name.en,
-          };
+          const tagName = tag?.attributes?.name?.en;
+          if (searchTerm) {
+            if (tagName?.toLowerCase().includes(searchTerm.toLowerCase())) {
+              return {
+                id: tag.id,
+                name: tagName,
+              };
+            }
+            return null;
+          } else {
+            return {
+              id: tag.id,
+              name: tag.attributes.name.en,
+            };
+          }
         })
       );
 
       // Filter out any null entries
-      setTagsList(mangaData.filter((m) => m !== null));
+      setTagsList(tagsData.filter((m) => m !== null));
     } catch (error) {
       console.error("Error fetching manga:", error);
     }

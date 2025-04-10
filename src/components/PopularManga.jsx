@@ -114,10 +114,19 @@ export default function PopularManga() {
                 gradientFrom="black"
                 gradientTo="transparent"
               >
-                <Heading truncate w="50%" fontSize="2xl">
+                <Heading
+                  truncate
+                  w={{ base: "100%", lg: "50%" }}
+                  fontSize="2xl"
+                >
                   {manga.title}
                 </Heading>
-                <Text lineClamp={3} w="50%" fontSize="lg" mt={2}>
+                <Text
+                  lineClamp={3}
+                  w={{ base: "100%", lg: "50%" }}
+                  fontSize="lg"
+                  mt={2}
+                >
                   {manga.description}...
                 </Text>
                 <Button

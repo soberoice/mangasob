@@ -1,49 +1,70 @@
-import React, { useEffect } from "react";
-import { Badge, Button, CloseButton, Dialog, Portal } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import {
+  Badge,
+  Box,
+  Button,
+  CloseButton,
+  Dialog,
+  IconButton,
+  Input,
+  Popover,
+  Portal,
+} from "@chakra-ui/react";
 import { useManga } from "./contexts/MangaProvider";
 import { useNavigate } from "react-router";
 import { FaTag } from "react-icons/fa";
 export default function TagsContainer() {
   const { tagsList, getTagsList } = useManga();
+  const [searchTerm, setSearchTerm] = useState();
   const navigat = useNavigate();
   const handleClick = (name, id) => {
     navigat(`/tag/${name}/${id}`);
   };
   useEffect(() => {
-    getTagsList();
-  }, []);
+    getTagsList(searchTerm);
+  }, [searchTerm]);
   return (
-    <Dialog.Root placement={"center"} scrollBehavior="inside" size="sm">
-      <Dialog.Trigger asChild>
-        <Button variant="outline" size={"sm"} w={"30px"}>
+    <Popover.Root scrollBehavior="inside">
+      <Popover.Trigger asChild>
+        <IconButton variant="outline" size={"sm"}>
           <FaTag />
-        </Button>
-      </Dialog.Trigger>
+        </IconButton>
+      </Popover.Trigger>
       <Portal>
-        <Dialog.Backdrop />
-        <Dialog.Positioner>
-          <Dialog.Content>
-            <Dialog.Header>
-              <Dialog.Title>Tags</Dialog.Title>
-            </Dialog.Header>
-            <Dialog.CloseTrigger asChild>
-              <CloseButton size="sm" />
-            </Dialog.CloseTrigger>
-            <Dialog.Body display={"flex"} flexWrap={"wrap"} gap={2}>
-              {tagsList?.map((tag) => (
-                <Dialog.Trigger
-                  key={tag.id}
-                  onClick={() => handleClick(tag.name, tag.id)}
-                >
-                  <Badge cursor={"pointer"} size={"lg"} variant={"solid"}>
-                    {tag.name}
-                  </Badge>
-                </Dialog.Trigger>
-              ))}
-            </Dialog.Body>
-          </Dialog.Content>
-        </Dialog.Positioner>
+        <Popover.Positioner>
+          <Popover.Content>
+            <Popover.Arrow />
+            <Popover.Body display={"flex"} flexDir={"column"} gap={2}>
+              <Popover.Title fontWeight={"bold"} fontSize={"xl"}>
+                Tags
+              </Popover.Title>
+              <Box height={"300px"} overflow={"scroll"}>
+                {tagsList?.map((tag) => (
+                  <Popover.Trigger
+                    key={tag?.id}
+                    onClick={() => handleClick(tag.name, tag.id)}
+                  >
+                    <Badge
+                      cursor={"pointer"}
+                      size={"lg"}
+                      m={1}
+                      variant={"solid"}
+                      height={"30px"}
+                    >
+                      {tag?.name}
+                    </Badge>
+                  </Popover.Trigger>
+                ))}
+              </Box>
+              <Input
+                placeholder="Search tags"
+                size="md"
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </Popover.Body>
+          </Popover.Content>
+        </Popover.Positioner>
       </Portal>
-    </Dialog.Root>
+    </Popover.Root>
   );
 }

@@ -27,7 +27,10 @@ export default function NavSearch() {
         color="black"
         w={{ base: "200px", lg: "500px" }}
         mx="10px"
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={(e) => {
+          setSearchTerm(e.target.value);
+          console.log(searchTerm);
+        }}
       />
       <IconButton type="submit" aria-label="Search database">
         <LuSearch />
