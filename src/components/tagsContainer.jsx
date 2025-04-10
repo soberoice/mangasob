@@ -24,7 +24,7 @@ export default function TagsContainer() {
     getTagsList(searchTerm);
   }, [searchTerm]);
   return (
-    <Popover.Root scrollBehavior="inside">
+    <Popover.Root scrollBehavior="inside" size={{ base: "sm", lg: "lg" }}>
       <Popover.Trigger asChild>
         <IconButton variant="outline" size={"sm"}>
           <FaTag />
@@ -34,11 +34,16 @@ export default function TagsContainer() {
         <Popover.Positioner>
           <Popover.Content>
             <Popover.Arrow />
-            <Popover.Body display={"flex"} flexDir={"column"} gap={2}>
+            <Popover.Body
+              minH={"325px"}
+              display={"flex"}
+              flexDir={"column"}
+              gap={2}
+            >
               <Popover.Title fontWeight={"bold"} fontSize={"xl"}>
                 Tags
               </Popover.Title>
-              <Box height={"300px"} overflow={"scroll"}>
+              <Box maxH={"200px"} overflow={"scroll"}>
                 {tagsList?.map((tag) => (
                   <Popover.Trigger
                     key={tag?.id}
@@ -47,7 +52,7 @@ export default function TagsContainer() {
                     <Badge
                       cursor={"pointer"}
                       size={"lg"}
-                      m={1}
+                      m={"2px"}
                       variant={"solid"}
                       height={"30px"}
                     >
@@ -57,6 +62,7 @@ export default function TagsContainer() {
                 ))}
               </Box>
               <Input
+                mt={"auto"}
                 placeholder="Search tags"
                 size="md"
                 onChange={(e) => setSearchTerm(e.target.value)}
