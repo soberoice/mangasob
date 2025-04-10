@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <Box w={"100%"}>
       <PopularManga />
-      <Stack w={"100%"} direction={{ base: "column", lg: "row" }}>
+      <Stack w={"100%"} direction={{ base: "column", md: "column", lg: "row" }}>
         <Box w={{ base: "100%", lg: "70%" }}>
           <PopularMangaList />
           {mangaList?.length ? (

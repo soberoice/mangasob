@@ -17,7 +17,6 @@ export default function SearchFeed() {
 
   return (
     <Stack mt={10} w={"full"} minH={"80vh"} justifyContent={"space-between"}>
-      {console.log(searchResults)}
       <Box>
         {searchResults?.length ? (
           <Stack p={4} direction={"row"} justify={"space-between"}>

@@ -29,7 +29,7 @@ export default function MangaList({ data }) {
           templateColumns={{
             base: "repeat(2, 1fr)", // 2 columns on small screens (mobile)
             sm: "repeat(3, 1fr)", // 3 columns on small devices
-            md: "repeat(3, 1fr)", // 4 columns on tablets
+            md: "repeat(4, 1fr)", // 4 columns on tablets
             lg: "repeat(4, 1fr)", // 5 columns on large screens
             xl: "repeat(5, 1fr)", // 6 columns on extra-large screens
           }}
@@ -48,11 +48,11 @@ export default function MangaList({ data }) {
                     cursor="pointer"
                     border="none"
                     maxHeight={450}
-                    maxWidth={{ base: "170px", sm: "200px", lg: "200px" }}
+                    maxWidth={{ base: "170px", lg: "200px" }}
                     overflow="hidden"
                   >
                     <Image
-                      aspectRatio={3 / 4}
+                      aspectRatio={2 / 3}
                       src={manga?.coverUrl}
                       alt={manga?.title}
                     />
