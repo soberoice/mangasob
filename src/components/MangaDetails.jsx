@@ -100,7 +100,7 @@ export default function MangaDetails({ data }) {
                     <MdBookmarkAdded /> {stats?.follows}
                   </Badge>
                   <Badge size={"lg"} display={"flex"}>
-                    <FaRegStar /> {stats?.rating.average.toFixed(1)}
+                    <FaRegStar /> {stats?.rating?.average?.toFixed(1)}
                   </Badge>
                 </HStack>
                 {data && <MangaEpisodeDrower mangaid={data?.id} />}

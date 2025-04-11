@@ -234,7 +234,7 @@ export const MangaProvider = ({ children }) => {
   };
 
   // FUNCTION TO GET SEARCH RESULTS
-  const search = async (page, searchTerm) => {
+  const search = async (page, limit, searchTerm) => {
     setSearchResults();
     try {
       const proxyBase = "https://corsproxy-psi.vercel.app/api/proxy?url=";
@@ -243,7 +243,7 @@ export const MangaProvider = ({ children }) => {
       const params = new URLSearchParams({
         title: searchTerm,
         offset: page,
-        limit: 20,
+        limit: limit,
         "includes[]": "cover_art",
         "order[followedCount]": "desc",
       });
