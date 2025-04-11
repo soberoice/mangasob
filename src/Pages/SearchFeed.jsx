@@ -11,7 +11,7 @@ export default function SearchFeed() {
   const { searchResults, search, itemNumber } = useManga();
   useEffect(() => {
     if (searchterm) {
-      search(offset, searchterm);
+      search(offset, 20, searchterm);
     }
   }, [offset, searchterm]);
 
